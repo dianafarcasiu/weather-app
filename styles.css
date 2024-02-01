@@ -1,0 +1,109 @@
+/* Overall page layout */
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    min-height: 100%;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('./images/bg-pic-1.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.content{
+    width: 65%;
+    border: 1px solid #1A120B;
+    border-radius: 5px;
+    padding: 35px;
+    background: rgba(255, 255, 255, 0.4);
+}
+.content:hover{
+    box-shadow:0 0 5px #1A120B;
+}
+
+/* User input */
+.search{
+    display: flex;
+    justify-content: center;
+}
+#city-input{
+    width: 65%;
+    border: 1px solid #1A120B;
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 10px;
+    font-size: large;
+    font-family: 'Roboto', sans-serif;
+}
+#city-input:focus{
+    outline:none;
+    border:1px solid #1A120B;
+    box-shadow:0 0 5px #1A120B;
+}
+#search-btn{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    color: #EEEDEB;
+    background-color: #1A120B;
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+}
+#search-btn i{
+    font-size: 1.2rem;
+}
+#search-btn:hover{
+    color: #1A120B;
+    border-color: #1A120B;
+    background-color: #EEEDEB;  
+}
+
+/* API output current weather */
+.current-weather-info{
+    padding: 40px;
+}
+h1, h4{
+    margin: 0;
+}
+
+/* API output forecast */
+.forecast-container{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.weather-card{
+    background-color: rgb(255, 255, 255, 0.6);
+    flex: 1;
+    border-radius: 10px;
+    border: 1px solid #1A120B;
+}
+.weather-card:hover{
+    box-shadow:0 0 10px #1A120B;
+}
+#forecast-temp{
+    font-size: 1.2rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .forecast-container{
+        flex-wrap: wrap;
+        align-content: center;
+        }
+    .body{
+        height: 100vh;
+    }
+    .content{
+        width: 100%;
+        padding: 10px;
+    }
+}
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!--Google Fonts link-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+
+        <div class="content">
+
+            <form class="search">
+                <input id="city-input" type="text" placeholder="Type any city...">
+                <button id="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <!-- <button id="location-btn">
+                    <i class="fa-solid fa-location-dot"></i>
+                </button> -->
+            </form>
+
+            <div class="current-weather-info">
+                <h1 id="temperature"></h1>
+                <img id="current-weather-icon">
+                <h4 id="description"></h4>          
+            </div>
+            <br>
+
+            <!--Section for the multiple day forecast-->
+            <div class="forecast-container"></div>
+        </div>
+    </div>
+    
+    <script src="./main.js"></script>
+     <!--Font Awesome Stylesheet- used for icons-->
+    <script src="https://kit.fontawesome.com/388f68cec4.js" crossorigin="anonymous"></script>
+</body>
+</html>
