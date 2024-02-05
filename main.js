@@ -2,8 +2,6 @@
 const cityInput = document.querySelector('#city-input');
 const searchBtn = document.querySelector('#search-btn');
 const locationBtn = document.querySelector('#location-btn');
-const temperature = document.querySelector('#temperature');
-const description = document.querySelector('#description');
 
 // Actual city name that the user types
 let cityName;
@@ -11,10 +9,10 @@ let cityName;
 const apiKey = '270ec8d21fc67e4a57d1e74aa502acac'
 
 // Function to fetch the current weather data
-async function fetchCurrentWeather(url) {
+async function fetchCurrentWeather() {
 
     // Getting ahold of the city name & only then defining the url
-    let cityName = cityInput.value;
+    cityName = cityInput.value;
     url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${apiKey}`;
 
     // Validating the user input, fetching data from the url & converting it to an array
@@ -27,9 +25,12 @@ async function fetchCurrentWeather(url) {
 // Function to display the current Weather
 function displayCurrentWeather(data) {
 
-    // Changing the text in the DOM elements
-    temperature.textContent = `${Math.round(data.main.temp)}°C`; 
-    description.textContent = `-${data.weather[0].description}-`;
+    document.querySelector('.current-weather-info').innerHTML = `
+    <h3>${data.name}</h3>
+    <h1>${Math.round(data.main.temp)}°C</h1>
+    <img id="current-weather-icon">
+    <h4>-${data.weather[0].description}-</h4>   
+    `
     // Setting the icon
     document.querySelector('#current-weather-icon').setAttribute('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
 }
@@ -41,9 +42,9 @@ function changeBackground() {
 }
 
 // Function to fetch the forecast
-async function fetchForecast(url) {
+async function fetchForecast() {
    
-    let cityName = cityInput.value;
+    cityName = cityInput.value;
     url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${apiKey}`;
 
     const response = await fetch(url);
@@ -79,6 +80,14 @@ function displayForecast(data) {
     });
 }
 
+// Function to filter an array of weather data in order to get only the temperature for the next following days at 15:00
+function filterData(array) {
+    return array.filter(element => {
+        const hour = new Date(element.dt_txt).getHours();
+        return hour === 15; 
+    })
+}
+
 // Function to display everything
 async function displayAll(e) {
     // Preventing the default behaviour of the form
@@ -88,19 +97,44 @@ async function displayAll(e) {
     const currentWeatherData = await fetchCurrentWeather();
     displayCurrentWeather(currentWeatherData);
 
-    // Fetching & displaying the forecast
+    // Fetching, filtering & displaying the forecast
     const forecastData = await fetchForecast();
-    // Filtering the array of weather data in order to get only the temperature for the next following days at 15:00
     const forecastDays = forecastData.list;
-    const filteredForecast = forecastDays.filter(element => {
-        const hour = new Date(element.dt_txt).getHours();
-        return hour === 15;
-    });
+    const filteredForecast = filterData(forecastDays);
     displayForecast(filteredForecast);
 
-    // Change the background pic
+    // Changing the background pic
     changeBackground();
+
+    // Clearing the user input
+    cityInput.value = '';
+}
+
+// Geolocation API
+// Getting ahold of the user's position
+function getUserPosition(e) {
+    e.preventDefault();
+    navigator.geolocation.getCurrentPosition(async position => {
+        // Getting the user's coordinates
+        const userLat = position.coords.latitude;
+        const userLong = position.coords.longitude;
+
+        // Fetching current weather based on the user's lat & long
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${userLat}&lon=${userLong}&units=metric&appid=${apiKey}`);
+        const data = await response.json();
+        displayCurrentWeather(data);
+
+        // Fetching forecast based on the user's lat & long
+        const fresponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${userLat}&lon=${userLong}&units=metric&appid=${apiKey}`);
+        const fdata = await fresponse.json();
+        const forecastDays = fdata.list;
+        const filteredForecast = filterData(forecastDays);
+        displayForecast(filteredForecast);
+
+        changeBackground();
+    });
 }
 
 // Adding Event Listeners
 searchBtn.addEventListener('click', displayAll);
+locationBtn.addEventListener('click', getUserPosition);

@@ -6,6 +6,7 @@ body{
     min-height: 100%;
     text-align: center;
     font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
     background-image: url('./images/bg-pic-1.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -46,7 +47,7 @@ body{
     border:1px solid #1A120B;
     box-shadow:0 0 5px #1A120B;
 }
-#search-btn{
+#search-btn, #location-btn{
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 15px;
@@ -56,10 +57,10 @@ body{
     display: flex;
     align-items: center;
 }
-#search-btn i{
+#search-btn i, #location-btn i{
     font-size: 1.2rem;
 }
-#search-btn:hover{
+#search-btn:hover, #location-btn:hover{
     color: #1A120B;
     border-color: #1A120B;
     background-color: #EEEDEB;  
@@ -67,10 +68,13 @@ body{
 
 /* API output current weather */
 .current-weather-info{
-    padding: 40px;
+    padding: 35px;
 }
-h1, h4{
+h1, h3, h4{
     margin: 0;
+}
+h3{
+    padding-bottom: 20px;
 }
 
 /* API output forecast */
@@ -90,6 +94,10 @@ h1, h4{
 }
 #forecast-temp{
     font-size: 1.2rem;
+}
+p{
+    margin: 0;
+    padding: 12px;
 }
 
 /* Media Queries */
